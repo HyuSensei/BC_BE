@@ -1,0 +1,24 @@
+{
+  "development": {
+    "username": "postgres.oobadonapfyapgyugszm",
+    "password": "Huyphan2002@",
+    "database": "skinlele",
+    "host": "aws-0-ap-southeast-1.pooler.supabase.com",
+    "dialect": "postgres",
+    "logging": false
+  },
+  "test": {
+    "username": "postgres.oobadonapfyapgyugszm",
+    "password": "Huyphan2002@",
+    "database": "skinlele",
+    "host": "aws-0-ap-southeast-1.pooler.supabase.com",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "postgres.oobadonapfyapgyugszm",
+    "password": "Huyphan2002@",
+    "database": "skinlele",
+    "host": "aws-0-ap-southeast-1.pooler.supabase.com",
+    "dialect": "postgres"
+  }
+}
