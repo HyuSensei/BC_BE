@@ -108,6 +108,7 @@ const addOrderOnl = async (req, res) => {
     const newCart = cart.map((item) => ({
       id: item.id,
       cartQuantity: item.cartQuantity,
+      price: item.price,
     }));
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
