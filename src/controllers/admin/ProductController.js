@@ -71,9 +71,9 @@ const storeProduct = async (req, res) => {
           detail: "Vui lòng điền đủ thông tin",
         });
       }
-      const id = Math.floor(Math.random() * 10000);
+      //const id = Math.floor(Math.random() * 10000);
       let data = await db.Product.create({
-        id,
+        // id,
         name: name,
         price: price,
         quantity: quantity,
