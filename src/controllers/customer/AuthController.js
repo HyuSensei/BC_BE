@@ -166,8 +166,8 @@ const handleLogin = async (req, res) => {
           };
           let token = createJWT(payload);
           res.cookie("jwt", token, {
-            sameSite: "none",
             secure: true,
+            sameSite: "none",
             httpOnly: true,
             maxAge: ms(process.env.COOKIE_EXPIRES_IN),
           });

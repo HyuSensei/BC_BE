@@ -114,8 +114,8 @@ const addOrderOnl = async (req, res) => {
       payment_method_types: ["card"],
       line_items: lineItems,
       mode: "payment",
-      success_url: "http://localhost:3000/order_success",
-      cancel_url: "http://localhost:3000/order_failed",
+      success_url: "http://localhost:3001/order_success",
+      cancel_url: "http://localhost:3001/order_failed",
       payment_intent_data: {
         metadata: {
           cart: JSON.stringify(newCart),

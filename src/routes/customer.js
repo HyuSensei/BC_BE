@@ -48,11 +48,7 @@ router.get(
   middleware.middlewareCustomer,
   OrderController.getOrderCancel
 );
-router.put(
-  "/order_cancel_action/:order_id",
-  middleware.middlewareCustomer,
-  OrderController.handleCancelOrder
-);
+router.put("/order_cancel_action/:order_id", OrderController.handleCancelOrder);
 router.put(
   "/order_confirm_action/:order_id",
   OrderController.handleUpdateConfirm
