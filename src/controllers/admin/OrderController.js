@@ -2,6 +2,9 @@ const db = require("../../models/index");
 
 const OrderDashBoard = async (req, res) => {
   try {
+    let { page, limit } = req.query;
+    page = parseInt(page);
+    limit = parseInt(limit);
     const countUser = await db.User.count();
     const countProduct = await db.Product.count();
     const countOrder = await db.Order.count();
@@ -10,11 +13,6 @@ const OrderDashBoard = async (req, res) => {
         status: 1,
       },
     });
-    let limit = 8;
-    let page = req.query.page;
-    if (!page) {
-      page = 1;
-    }
     const { count, rows: orders } = await db.Order.findAndCountAll({
       limit: limit,
       offset: (page - 1) * limit,
@@ -38,11 +36,9 @@ const OrderDashBoard = async (req, res) => {
 
 const orderIndex = async (req, res) => {
   try {
-    let limit = 8;
-    let page = req.query.page;
-    if (!page) {
-      page = 1;
-    }
+    let { page, limit } = req.query;
+    page = parseInt(page);
+    limit = parseInt(limit);
     const { count, rows: orders } = await db.Order.findAndCountAll({
       limit: limit,
       offset: (page - 1) * limit,

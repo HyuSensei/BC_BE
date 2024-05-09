@@ -123,7 +123,6 @@ const addOrderOnl = async (req, res) => {
         },
       },
     });
-    //await orderOnl(cart, userOrder);
     return res.status(200).json({
       success: true,
       id: session.id,
@@ -209,13 +208,39 @@ const getOrderWait = async (req, res) => {
         status: 0,
       },
     });
+    const orders = data.map((item) => {
+      const products = item.Order_Products.map((product) => {
+        return {
+          id: product.ProductId,
+          name: product.Product.name,
+          quantity: product.quantity,
+          image: product.Product.image,
+          price: product.Product.price,
+        };
+      });
+      return {
+        id: item.id,
+        payment: item.payment,
+        status: item.status,
+        name: item.name,
+        address: item.address,
+        phone: item.phone,
+        total: item.total,
+        UserId: item.UserId,
+        products: [...products],
+      };
+    });
     return res.status(200).json({
       success: true,
       message: "Thông tin đơn hàng đang chờ duyệt !",
-      orders: data,
+      orders: orders,
     });
   } catch (error) {
     console.log(error);
+    return res.json({
+      success: false,
+      orders: [],
+    });
   }
 };
 
@@ -247,6 +272,10 @@ const getOrderShip = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+    return res.json({
+      success: false,
+      orders: [],
+    });
   }
 };
 
@@ -294,9 +323,9 @@ const getOrderComplete = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({
+    return res.json({
       success: false,
-      message: "Đã xảy ra lỗi khi lấy thông tin đơn hàng.",
+      orders: [],
     });
   }
 };
@@ -330,6 +359,10 @@ const getOrderCancel = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+    return res.json({
+      success: false,
+      orders: [],
+    });
   }
 };
 

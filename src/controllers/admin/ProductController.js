@@ -4,11 +4,9 @@ const fs = require("fs");
 
 const productIndex = async (req, res) => {
   try {
-    let limit = 5;
-    let page = req.query.page;
-    if (!page) {
-      page = 1;
-    }
+    let { page, limit } = req.query;
+    page = parseInt(page);
+    limit = parseInt(limit);
     const { count, rows: products } = await db.Product.findAndCountAll({
       limit: limit,
       offset: (page - 1) * limit,
@@ -71,9 +69,9 @@ const storeProduct = async (req, res) => {
           detail: "Vui lòng điền đủ thông tin",
         });
       }
-      //const id = Math.floor(Math.random() * 10000);
+      const id = Math.floor(Math.random() * 10000);
       let data = await db.Product.create({
-        // id,
+        id,
         name: name,
         price: price,
         quantity: quantity,

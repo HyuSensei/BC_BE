@@ -1,57 +1,5 @@
 const db = require("../../models/index");
 
-const getProductSale = async (req, res) => {
-  try {
-    products = await db.Product.findAll();
-    const today = new Date();
-    const validProducts = [];
-    products.forEach((product) => {
-      if (product.manufacture !== null && product.expiry !== null) {
-        // Ngày sản xuất
-        const manufactureDate = new Date(product.manufacture);
-        // Hạn sử dụng (số năm)
-        const expiryYears = product.expiry;
-        // Tính ngày hết hạn
-        const expiryDate = new Date(
-          manufactureDate.getFullYear() + expiryYears,
-          manufactureDate.getMonth(),
-          manufactureDate.getDate()
-        );
-        const daysBeforeExpiry = Math.floor(
-          (expiryDate - today) / (1000 * 60 * 60 * 24)
-        );
-
-        if (daysBeforeExpiry >= 0 && daysBeforeExpiry <= 365) {
-          validProducts.push(product);
-        }
-      }
-    });
-    return res.json({
-      success: true,
-      products: validProducts,
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const getProductTop = async (req, res) => {
-  try {
-    let products = await db.Product.findAll({
-      where: {
-        id: {
-          [db.Sequelize.Op.between]: [10, 17],
-        },
-      },
-      raw: true,
-    });
-    return res.json({
-      success: true,
-      products: products,
-    });
-  } catch (error) {}
-};
-
 const getProductDetail = async (req, res) => {
   try {
     let id = req.params.id;
@@ -162,13 +110,20 @@ const getProductSearch = async (req, res) => {
 
 const getProductHome = async (req, res) => {
   try {
-    let products = await db.Product.findAll({
-      limit: 16,
+    const { page, limit } = req.query;
+    const { count, rows: products } = await db.Product.findAndCountAll({
+      limit: limit,
+      offset: (page - 1) * limit,
     });
-    return res.status(200).json({
+    const totalPage = Math.ceil(count / limit);
+    const result = {
       success: true,
+      total_product: count,
+      total_page: totalPage,
+      current_page: page,
       products: products,
-    });
+    };
+    return res.status(200).json(result);
   } catch (error) {
     console.log(error);
   }
@@ -177,7 +132,5 @@ const getProductHome = async (req, res) => {
 module.exports = {
   getProductDetail,
   getProductSearch,
-  getProductSale,
-  getProductTop,
   getProductHome,
 };

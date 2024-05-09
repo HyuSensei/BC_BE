@@ -24,11 +24,7 @@ const getAllCategory = async (req, res) => {
 
 const getProductCategory = async (req, res) => {
   try {
-    let limit = 8;
-    let page = req.query.page;
-    if (!page) {
-      page = 1;
-    }
+    const { page, limit } = req.query;
     let category_id = req.params.category_id;
     const { count, rows: products } = await db.Product.findAndCountAll({
       limit: limit,
