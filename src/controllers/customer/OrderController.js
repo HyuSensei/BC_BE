@@ -114,7 +114,7 @@ const addOrderOnl = async (req, res) => {
       payment_method_types: ["card"],
       line_items: lineItems,
       mode: "payment",
-      success_url: "hthttps://skinlele.vercel.app/order_success",
+      success_url: "https://skinlele.vercel.app/order_success",
       cancel_url: "https://skinlele.vercel.app/order_failed",
       payment_intent_data: {
         metadata: {
