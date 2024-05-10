@@ -74,12 +74,8 @@ const getProductDetail = async (req, res) => {
 
 const getProductSearch = async (req, res) => {
   try {
-    let limit = 8;
-    let page = req.query.page;
-    if (!page) {
-      page = 1;
-    }
-    let product_name = req.query.name;
+    const { page, limit } = req.query;
+    const product_name = req.query.name;
     if (!product_name) {
       return res.status(400).json({
         detail: "Vui lòng nhập tên sản phẩm",
